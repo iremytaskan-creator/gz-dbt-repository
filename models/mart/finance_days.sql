@@ -1,9 +1,7 @@
 with orders_margin as (
-    -- Sipariş başına gelir, quantity, purchase_cost, margin
     select *
-    from {{ ref('int_orders_margin') }}
+    from {{ ref('int_sales_margin') }}
 ),
-
 orders_operational as (
     -- Sipariş başına operational_margin
     select *
