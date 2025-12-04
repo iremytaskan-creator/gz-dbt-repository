@@ -1,19 +1,13 @@
-with 
-
-source as (
-
-    select * from {{ source('raw', 'product') }}
-
-),
-
-renamed as (
+with source as (
 
     select
         products_id,
-        CAST(purchse_price AS FLOAT64) AS purchase_price,
-
-    from source
+        purchSE_PRICE
+    from {{ source('raw', 'product') }}
 
 )
 
-select * from renamed
+select
+    products_id as product_id,
+    safe_cast(replace(purchSE_PRICE, ',', '.') as numeric) as purchase_price
+from source

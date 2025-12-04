@@ -1,23 +1,17 @@
-with 
-
-source as (
-
-    select * from {{ source('raw', 'ship') }}
-
-),
-
-renamed as (
+with source as (
 
     select
         orders_id,
         shipping_fee,
-        shipping_fee_1,
-        logcost,
-        ship_cost,
+        logCost,
         ship_cost_num
-
-    from source
+    from {{ source('raw', 'ship') }}   -- schema.yml'deki name: raw / name: ship
 
 )
 
-select * from renamed
+select
+    orders_id,
+    cast(shipping_fee as numeric) as shipping_fee,
+    cast(logCost      as numeric) as log_cost,
+    ship_cost_num                  as ship_cost
+from source
